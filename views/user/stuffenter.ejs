@@ -1,0 +1,34 @@
+<%-// include('../partials/header.ejs') %>
+      <div class ="container-fluid">
+          <div class ="row text-center">
+              <div class ="col-md-12 col-xs-12">
+                <h1>Enter the product details</h1>
+              </div>
+          </div>
+      </div>
+      <div class ="container-fluid">
+        <div class ="row text-center">
+            <div class ="col-md-3 col-sm-12"></div>
+            <div class ="col-md-6 col-sm-12">
+              <form action="/Admin/admin/shoppingstuff" method ="POST" enctype="multipart/form-data">
+                <div class ="form-group"><input type ="text"name ="name" placeholder ="Name of the product"required class ="form-control"></div>
+                <div class ="form-group">
+                    <select class ="form-control"name ="category">
+                        <option class ="form-control" value ="Books">Books</option>
+                        <option class ="form-control" value ="Stationary">Stationary</option>
+                        <option class ="form-control" value ="Mobile">Mobile</option>
+                        <option class ="form-control" value ="Electronics">Electronics</option>
+                        <option class ="form-control" value ="Clothes">Clothes</option>
+                        <option class ="form-control" value ="Shoes">Shoes</option>
+                    </select>
+                </div>
+                <div class ="form-group"><input type ="text" name ="price" placeholder ="Price" required class ="form-control"></div>
+                <div class ="form-group"><input type ="text" name ="description" placeholder ="Description" required class ="form-control"></div>
+                <div class ="form-group"><input type ="file" name ="image" placeholder ="image" class ="form-control"></div>
+                <div class ="form-group"><input type ="submit"class ="btn btn-outline-success form-control"></div>
+              </form>
+            </div>
+        </div>
+    </div>
+   </body>
+   </html>
