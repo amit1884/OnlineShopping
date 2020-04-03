@@ -3,33 +3,33 @@ var path=require('path');
 var bodyparser=require('body-parser');
 var mongoose=require('mongoose');
 var multer=require('multer');
-var passport=require('passport'),
-LocalStrategy=require('passport-local');
+var bcrypt=require('bcrypt')
+// var passport=require('passport'),
+// LocalStrategy=require('passport-local');
 var router=express();
 var User=require('../models/user');
 var Stuff=require('../models/shop');
-// var Admin=require('../models/admin');
 mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
 
 
+router.set('trust proxy', 1) // trust first proxy
 
-//passport authentication
 router.use(require('express-session')({
-    secret:"Rusty is best and cutest dog",
-    resave:false,
-    saveUninitialized:false
+    secret:"secrethashing",
+    resave:true,
+    saveUninitialized:true,
+    cookie:{secure:false}
 }));
-
-router.use(passport.initialize());
-router.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+const saltRounds = 10;
+var sess;
 
 router.use((req,res,next)=>{
-    res.locals.currentUser=req.user;
+    sess=req.session;
+    res.locals.currentUser=sess.username;
     next();
 });
+
+
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -41,16 +41,8 @@ var storage = multer.diskStorage({
   })
   var upload = multer({ storage: storage }) 
 
-router.use((req,res,next)=>{
-    res.locals.currentAdmin=req.Admin;
-    next();
-});
-
-router.use(express.static("public"));
-router.use(bodyparser.urlencoded({extended:true}));
 
 router.get('/user',isLoggedIn,(req,res)=>{
-
     Stuff.find({},(err,stuff)=>{
 
         if(err)
@@ -59,12 +51,10 @@ router.get('/user',isLoggedIn,(req,res)=>{
             res.render('user/index',{stuff:stuff});
         }
     })
-   
 })
-
 router.get('/user/login',(req,res)=>{
-    res.render('user/login');
-});
+    res.render('user/login')
+})
 
 router.get('/user/stuffenter',isLoggedIn,(req,res)=>{
     res.render('user/stuffenter');
@@ -90,49 +80,77 @@ router.post("/user/shoppingstuff", upload.single('image'),(req,res,next)=>{
 
 
 
+router.post('/user/register',(req,res)=>{
+    var user=req.body.username;
+    var pwd=req.body.password;
+    var newuser=new User(req.body);
+    bcrypt.hash(pwd, saltRounds, function(err, hash) {
+       newuser.password=hash;
+       console.log(newuser);
+       newuser.save((err,user)=>{
+           if(err)
+           console.log(err)
+           else{
+               console.log(user);
+               res.redirect('/User/user/login');
+           }
+       })
+        
+    });
+});
 
-
-
-
-//-----------------------------------------------------------------------------
-//register (backend)
-//-----------------------------------------------------------------------------
-
-router.post("/user/register",(req,res)=>{
-    var newAdmin=new Admin({username:req.body.username});
-    Admin.register(newAdmin,req.body.password,(err,user)=>{
-         if(err)
-         {
-             console.log(err);
-             return res.redirect('/User/user/login');
-         }
-         passport.authenticate("local")(req,res,()=>{
-             console.log(user);
-             res.redirect("/User/user/login");
-         })
+router.post('/user/login',(req,res)=>{
+    User.find({username:req.body.username},(err,founduser)=>{
+        if(err)
+        console.log(err)
+        else{
+           if(founduser.length>0)
+           {
+               console.log(req.body.password);
+               console.log(founduser[0].password);
+                bcrypt.compare(req.body.password,founduser[0].password).then(function(result){
+                    if(result)
+                    {
+                        sess=req.session;
+                        sess.username=req.body.username;
+                        console.log('logged user :')
+                        console.log(sess.username);
+                      res.redirect('/User/user')
+                    }
+                    else{
+                        console.log('wrong password');
+                    }
+                })
+           }
+           else{
+               console.log('no user found');
+           }
+        }
     })
-});
+
+})
 
 
-router.post("/user/login",
-passport.authenticate("local",{
-    successRedirect:"/User/user",
-    failureRedirect:"/User/user/login"
-}),
-(req,res)=>{
+
+
+
+
+
+router.get('/user/logout',(req,res)=>{
+        req.session.destroy((err) => {
+            if(err) {
+                return console.log(err);
+            }
+            res.redirect('/User/user/login');
+        });
 });
-router.get("/user/logout",(req,res)=>{
-    req.logOut();
+
+function isLoggedIn(req,res,next){
+
+    sess=req.session;
+    if(sess.username)
+    return next();
     res.redirect('/User/user/login');
-});
-
- ///middleware to authenticate and  open secret page 
- function isLoggedIn(req,res,next)
- {
-     if(req.isAuthenticated()){
-         return next();
-     }
-     res.redirect("/User/user/login");
- }
+}
 
 module.exports=router;

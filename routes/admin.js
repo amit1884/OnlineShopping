@@ -15,14 +15,14 @@ mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,us
 
 //passport authentication
 router.use(require('express-session')({
-    secret:"Rusty is best and cutest dog",
+    secret:"secrethashing",
     resave:false,
     saveUninitialized:false
 }));
 
 router.use(passport.initialize());
 router.use(passport.session());
-passport.use(new LocalStrategy(Admin.authenticate()));
+passport.use('local-1',new LocalStrategy(Admin.authenticate()));
 passport.serializeUser(Admin.serializeUser());
 passport.deserializeUser(Admin.deserializeUser());
 
@@ -88,44 +88,6 @@ router.post("/admin/shoppingstuff", upload.single('image'),(req,res,next)=>{
     console.log(newproduct);
    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //-----------------------------------------------------------------------------
 //register (backend)
 //-----------------------------------------------------------------------------
@@ -138,16 +100,16 @@ router.post("/admin/register",(req,res)=>{
              console.log(err);
              return res.redirect('/Admin/admin/login');
          }
-         passport.authenticate("local")(req,res,()=>{
+         passport.authenticate("local-1")(req,res,()=>{
              console.log(user);
-             res.redirect("/Admin/admin/login");
+             res.redirect("/Admin/admin");
          })
     })
 });
 
 
 router.post("/admin/login",
-passport.authenticate("local",{
+passport.authenticate("local-1",{
     successRedirect:"/Admin/admin",
     failureRedirect:"/Admin/admin/login"
 }),
