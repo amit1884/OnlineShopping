@@ -4,8 +4,6 @@ var bodyparser=require('body-parser');
 var mongoose=require('mongoose');
 var multer=require('multer');
 var bcrypt=require('bcrypt')
-// var passport=require('passport'),
-// LocalStrategy=require('passport-local');
 var router=express();
 var User=require('../models/user');
 var Stuff=require('../models/shop');
@@ -26,6 +24,7 @@ var sess;
 router.use((req,res,next)=>{
     sess=req.session;
     res.locals.currentUser=sess.username;
+    res.locals.currentprofile=sess.image;
     next();
 });
 
@@ -77,13 +76,15 @@ router.post("/user/shoppingstuff", upload.single('image'),(req,res,next)=>{
     })
     console.log(newproduct);
    });
+   router.get('/user/profile',(req,res)=>{
+       res.render('user/profile');
+   })
 
-
-
-router.post('/user/register',(req,res)=>{
+router.post('/user/register',upload.single('avatar'),(req,res,next)=>{
     var user=req.body.username;
     var pwd=req.body.password;
     var newuser=new User(req.body);
+    newuser.image=req.file.filename;
     bcrypt.hash(pwd, saltRounds, function(err, hash) {
        newuser.password=hash;
        console.log(newuser);
@@ -113,6 +114,7 @@ router.post('/user/login',(req,res)=>{
                     {
                         sess=req.session;
                         sess.username=req.body.username;
+                        sess.image=founduser[0].image;
                         console.log('logged user :')
                         console.log(sess.username);
                       res.redirect('/User/user')

@@ -6,6 +6,21 @@ var UserSchema=new mongoose.Schema({
     },
     password:{
         type:String
+    },
+    first:{
+        type:String
+    },
+    last:{
+        type:String
+    },
+    email:{
+        type:String
+    },
+    mobile:{
+        type:String
+    },
+    image:{
+        type:String
     }
 });
 UserSchema.plugin(passportLocalMongoose);

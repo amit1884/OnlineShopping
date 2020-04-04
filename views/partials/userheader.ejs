@@ -25,35 +25,27 @@
               <a class="nav-link" href="/User/user" style ="color:#fff">Home <span class="sr-only">(current)</span></a>
             </li>
               <li class="nav-item active">
-                <a class="nav-link" href="/User/user/stuffenter" style ="color:#fff">Sell</a>
+                <a class="nav-link" href="/User/user/stuffenter" style ="color:#fff">Sell Product</a>
               </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle"  style ="color:#fff"href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                <b><i class ="fa fa-user"></i>&nbsp;&nbsp;<%=currentUser%></b></a>
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+
+                <a class="dropdown-item text-center" href="/User/user/profile" style ="text-emphasis: none;text-decoration: none;">
+                  <img src ="/uploads/<%=currentprofile%>" style ="width:120px;height:120px;border-radius: 50%;"><br>
+                  <b>View Profile</b>
+                </a><br>
+                <a class="dropdown-item" href="/User/user/logout"><button class="btn btn-danger" style ="border-radius:20px;"><i class ="fa fa-power-off"></i>&nbsp;LogOut</button> </a>
               </div>
             </li>
-            <li class ="nav-item">
-              <a href ="/User/user/profile/<%=currentUser._id%>" style ="color:#fff;text-transform: capitalize;" class ="nav-link">
-                <% if(currentUser)%>
-                <b><i class ="fa fa-user"></i>&nbsp;&nbsp;<%=currentUser%></b></a>
-            </li>
-            <% if(currentUser){%>
-              <li class="nav-item" style ="padding-left:30px;">
-                <a class="nav-link" href="/User/user/logout" style ="color:#fff">
-                  <button class ="btn btn-danger" style ="border-radius:50px;"><i class ="fa fa-power-off"></i>&nbsp;LogOut</button></a>
-              </li>
-              <%} %>
           </ul>
-          
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
+
+     
