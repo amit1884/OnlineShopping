@@ -3,6 +3,7 @@ var path=require('path');
 var bodyparser=require('body-parser');
 var mongoose=require('mongoose');
 var multer=require('multer');
+var FuzzySearch=require('fuzzy-search');
 var passport=require('passport'),
 LocalStrategy=require('passport-local');
 var router=express();
@@ -87,6 +88,34 @@ router.post("/admin/shoppingstuff", upload.single('image'),(req,res,next)=>{
     })
     console.log(newproduct);
    });
+
+
+   router.post('/admin/search',(req,res)=>{
+
+    var text=req.body.search;
+    console.log(text);
+    Stuff.find({},(err,foundproducts)=>{
+        if(err)
+        {
+            console.log(err);
+            res.redirect('/');
+        }
+        else{
+            const searcher = new FuzzySearch(foundproducts, ['name','category'], {
+                caseSensitive: false,
+              });
+              const result = searcher.search(text);
+              console.log(result);
+              res.render('productfound',{founddata:result})
+            // res.send(result);
+        
+        }
+    })
+   })
+
+
+
+
 
 //-----------------------------------------------------------------------------
 //register (backend)

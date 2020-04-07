@@ -46,20 +46,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/User/user/login" style ="color:#fff">User Login</a>
               </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"  style ="color:#fff"href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <form class="form-inline my-2 my-lg-0" action ="/Admin/admin/search" method ="POST">
+            <input class="form-control mr-sm-2" name ="search" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
@@ -93,7 +82,7 @@
       </div>
 
       <div class="container-fluid">
-        <div class="row">
+        <div class="row text-center">
           <div class="col-xs-12 ">
             <nav>
               <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -110,6 +99,7 @@
                <div class ="row" style ="display:flex;flex-wrap: wrap;">
                  <%stuff.forEach((data)=>{%>
                     <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                       <div class ="card" style ="padding:20px;margin:10px;">
                         <div class ="thumbnail">
                           <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
@@ -117,10 +107,14 @@
                         <div class ="details">
                           <h3><b><%=data.name%></b></h3>
                           <p><b>Price :</b><%=data.price%></h3>
-                          <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                            <div>
+                              <form action ="/User/user/addtocart/" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                         </div>
                       </div>
+                    </a>
                     </div>
                  <%})%>
                </div>
@@ -131,6 +125,7 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Mobile'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
@@ -138,10 +133,14 @@
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
                            <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                            <div>
+                              <form action ="/User/user/addtocart/" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -153,6 +152,7 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Electronics'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
@@ -160,10 +160,14 @@
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
                            <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                            <div>
+                              <form action ="/User/user/addtocart/" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -175,6 +179,7 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Clothes'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
@@ -182,10 +187,14 @@
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
                            <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                            <div>
+                              <form action ="/User/user/addtocart/" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -197,6 +206,7 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Shoes'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
@@ -204,10 +214,14 @@
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
                            <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                            <div>
+                              <form action ="/User/user/addtocart/" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -219,6 +233,7 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Stationary'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
@@ -226,10 +241,14 @@
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
                            <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                            <div>
+                              <form action ="/User/user/addtocart/" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>

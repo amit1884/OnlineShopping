@@ -232,19 +232,37 @@ td{
                       <td>
                           <p><%=product.owner%></p>
                       </td>
+                    </tr>
+                    <tr>
+                      <th>
+                          <p>Payment Mode : </p>
+                      </th>
+                      <td>
+                          <p>Cash On Delivery/Google Pay/Phone Pay/Paytm</p>
+                      </td>
+                    </tr>
+                    <tr>
+                  <td><form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                    <button class ="btn btn-warning" value ="<%=product._id%>" name ="add">&nbsp;&nbsp;&nbsp;Add to Cart&nbsp;&nbsp;&nbsp;</button>
+                  </form></td>
+                  <td><form action ="/User/user/buyproduct/<%=product._id%>" method ="POST" >
+                    <button class ="btn btn-danger"value ="<%=product._id%>" name ="product">&nbsp;&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                  </form></td>
                   </tr>
                 </table>
-                <hr>
+              </div>
                 <h3>Reviews</h3>
                 <hr>
+                <div class ="jumbotron">
                 <form  action ="/User/user/review/<%=product._id%>" method ="POST">
                     <div class ="form-group"><input class="form-control" type="text" placeholder="Your Reviews" name ="review" ></div>
                     <div class ="form-group"><input class="form-control" type="text"  name ="author"value ="<%=currentUser%>"></div>
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Submit</button>
-                  </form><hr>
+                  </form>
+                  <hr>
                   <%product.comments.forEach((data)=>{%>
                     <div>
-                      <span><i class ="fa fa-star" style="color:orange"></i>&nbsp;<%=data.review%></span>
+                      <span style ="text-transform: capitalize;"><b>>>&nbsp;&nbsp; <%=data.review%></b></span>
                       <span style ="float:right;margin-right:30px;text-transform: capitalize;"><%=data.author%><br><%=data.date%></span>
                     </div><br><hr>
                   <%})%>

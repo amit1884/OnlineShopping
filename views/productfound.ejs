@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping</title>
+    <link rel="shortcut icon" href="/images/pngfuel.com.png" type="image/x-icon">
+    <link rel ="stylesheet" href ="/css/bootstrap.min.css">
+    <link rel ="stylesheet" href ="/css/style.css">
+    <link rel ="stylesheet" href ="/css/tab.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel ="stylesheet" href ="/css/style.css">
+</head>
+<style>
+  a{
+    text-decoration: none;
+    color:#413e66;
+  }
+  a:hover{
+    text-decoration: none;
+  }
+  .card .thumbnail:hover{
+    transform: scale(1.05);
+    transition: ease-in .3s;
+  }
+  div{
+    text-transform: capitalize;
+  }
+</style>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand" href="/"><img src ="/images/pngfuel.com.png" style ="width:60px;"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/" style ="color:#fff">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/admin/login" style ="color:#fff">Admin Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/User/user/login" style ="color:#fff">User Login</a>
+              </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0" action ="/Admin/admin/search" method ="POST">
+            <input class="form-control mr-sm-2" name ="search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+      <div class = "container-fluid">
+          <div class ="row text-center">
+              <div class ="col-md-12">
+                    <h2>You Searched For :</h2>
+              </div>
+          </div>
+      </div><br>
+      <div class = "container">
+          <%if(founddata.length==0){%>
+            <h2>Sorry! No results found</h2>
+            <%} else{%>
+        <%founddata.forEach((data)=>{%>
+            <div class ="row">
+                <div class ="col-md-4 col-sm-12">
+                    <div class ="thumbnail">
+                        <img src ="/uploads/<%=data.image%>" style ="width:300px;height:300px;">
+                    </div>
+                </div>
+                <div class ="col-md-1 col-sm-12"></div>
+                <div class ="col-md-5 col-sm-12">
+                    <div class ="jumbotron">
+                    <h3 style ="color:#413;text-transform: capitalize;"><%=data.name%></h3>
+                    <h5><%=data.category%></h5>
+                    <h5><%=data.description%></h5>
+                    <h5><b>&#8377;<%=data.price%></b></h5>
+                    </div>
+                    <span>
+                        <a href ="/User/user/product_details/<%=data._id%>">
+                        <button class ="btn btn-danger">View Details</button>
+                        </a>
+                    </span>
+                </div>
+            </div><hr>
+        <%})%>
+        <%}%>
+    </div>
+
+    <%-include('./partials/footer.ejs')%>
