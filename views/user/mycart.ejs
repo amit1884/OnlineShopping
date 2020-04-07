@@ -1,0 +1,63 @@
+<%-include('../partials/userheader.ejs')%>
+<style>
+    a{
+      text-decoration: none;
+      color:#413e66;
+    }
+    a:hover{
+      text-decoration: none;
+    }
+    .card .thumbnail:hover{
+      transform: scale(1.05);
+      transition: ease-in .3s;
+    }
+    div{
+      text-transform: capitalize;
+    }
+    </style>
+    <% totalprice =0; %>
+<div class ="container">
+   <% if(items.length==0){%>
+    <h3 class ="text-center">Your Cart is empty !!!</h3>
+    <%} else{%>
+        <div class ="container-fluid">
+            <div class ="row text-center">
+                <div class ="col-md-12">
+                    <h1 style ="color:#413"><u>Items In Your Cart</u></h1>
+                </div>
+            </div>
+        </div><br>
+        <%items.forEach((data)=>{%>
+            <%totalprice=totalprice+parseInt(data.price,10); %>
+            <div class ="row">
+                <div class ="col-md-4 col-sm-12">
+                    <div class ="thumbnail">
+                    <img src ="/uploads/<%=data.image%>" width ="250px" height ="250">
+                    </div>
+                </div>
+                <div class ="col-md-8 col-sm-12">
+                    <h3><u><%=data.name%></u></h3>
+                    <h5><%=data.category%></h5>
+                    <h5><%=data.description%></h5>
+                    <h4><b>Price : &#8377;</b><%=data.price%></h4><br>
+                    <div class ="row ">
+                        <div class ="col-md-6 ">
+                            <form action ="/User/user/buyproduct/<%=data._id%>" method ="POST">
+                                <button class ="btn btn-outline-primary">Buy Now</button>
+                            </form>
+                        </div>
+                        <div class ="col-md-6">
+                            <form action ="/User/user/delcartproduct/<%=data._id%>" method ="POST">
+                                <button class ="btn btn-outline-danger">Remove from Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        <% }) }%>
+            <div class ="jumbotron">
+                <h3><b>Total Amount :</b> &#8377;<%=totalprice%></h3>
+            </div>
+</div>
+<%-include('../partials/footer.ejs')%>

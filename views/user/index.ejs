@@ -1,4 +1,20 @@
 <%- include('../partials/userheader.ejs') %>
+<style>
+  a{
+    text-decoration: none;
+    color:#413e66;
+  }
+  a:hover{
+    text-decoration: none;
+  }
+  .card .thumbnail:hover{
+    transform: scale(1.05);
+    transition: ease-in .3s;
+  }
+  div{
+    text-transform: capitalize;
+  }
+</style>
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -45,20 +61,25 @@
             </nav>
             <div class="tab-content py-3 px-3 px-sm-0 " id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-               <div class ="row" style ="display:flex;flex-wrap: wrap;">
+               <div class ="row text-center" style ="display:flex;flex-wrap: wrap;">
                  <%stuff.forEach((data)=>{%>
                     <div class ="col-md-3 col-sm-12">
-                      <div class ="card" style ="padding:20px;margin:10px;">
-                        <div class ="thumbnail">
+                      <a href ="/User/user/product_details/<%=data._id%>">
+                        <div class ="card" style ="padding:20px;margin:10px;">
+                          <div class ="thumbnail">
                           <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
-                        </div>
-                        <div class ="details">
-                          <h3><b><%=data.name%></b></h3>
-                          <p><b>Price :</b><%=data.price%></h3>
-                          <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
-                        </div>
+                          </div>
+                          <div class ="details">
+                            <h3><b><%=data.name%></b></h3>
+                            <p><b>Price : </b>&#8377;<%=data.price%></h3>
+                           <div>
+                              <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
+                          </div>
                       </div>
+                      </a>
                     </div>
                  <%})%>
                </div>
@@ -69,17 +90,22 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Mobile'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
                          </div>
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
-                           <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                           <p><b>Price : </b> &#8377;<%=data.price%></h3>
+                          <div>
+                            <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                              <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                            </form>
+                          </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -91,17 +117,22 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Electronics'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
                          </div>
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
-                           <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                           <p><b>Price : </b>&#8377;<%=data.price%></h3>
+                            <div>
+                              <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -113,17 +144,22 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Clothes'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
                          </div>
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
-                           <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                           <p><b>Price : </b>&#8377;<%=data.price%></h3>
+                            <div>
+                              <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -135,17 +171,22 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Shoes'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
                          </div>
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
-                           <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                           <p><b>Price : </b>&#8377;<%=data.price%></h3>
+                            <div>
+                              <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                                <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                              </form>
+                            </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>
@@ -157,17 +198,22 @@
                   <%stuff.forEach((data)=>{%>
                     <%if(data.category=='Stationary'){%>
                      <div class ="col-md-3 col-sm-12">
+                      <a href ="/User/user/product_details/<%=data._id%>">
                        <div class ="card" style ="padding:20px;margin:10px;">
                          <div class ="thumbnail">
                            <img src ="/uploads/<%=data.image%>" style ="width:100%;height:300px">
                          </div>
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
-                           <p><b>Price :</b><%=data.price%></h3>
-                           <p><b>Description : </b><%=data.description%></h3><br>
-                            <button class ="btn btn-outline-warning">Add to Cart</button>
+                           <p><b>Price : </b>&#8377;<%=data.price%></h3>
+                           <div>
+                            <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
+                              <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
+                            </form>
+                           </div>
                          </div>
                        </div>
+                       </a>
                      </div>
                      <%}%> 
                   <%})%>

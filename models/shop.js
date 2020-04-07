@@ -22,5 +22,15 @@ var ShopSchema=new mongoose.Schema({
         type: String,
         required: false
     },
+    owner:{
+        type:String,
+        required:true
+    },
+    comments:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Comment"
+        }
+    ]
 });
 module.exports=mongoose.model('Shop',ShopSchema);

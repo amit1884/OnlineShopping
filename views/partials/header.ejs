@@ -24,11 +24,6 @@
             <li class="nav-item active">
               <a class="nav-link" href="/Admin/admin" style ="color:#fff">Home <span class="sr-only">(current)</span></a>
             </li>
-            <% if(currentUser){%>
-              <li class="nav-item">
-                <a class="nav-link" href="/Admin/admin/logout" style ="color:#fff">LogOut</a>
-              </li>
-              <%} %>
               <li class="nav-item active">
                 <a class="nav-link" href="/Admin/admin/stuffenter" style ="color:#fff">Products Entry</a>
               </li>
@@ -48,6 +43,12 @@
                 <% if(currentUser)%>
                 <b><i class ="fa fa-user"></i>&nbsp;&nbsp;<%=currentUser.username%></b></a>
             </li>
+            <% if(currentUser){%>
+              <li class="nav-item">
+                <a class="nav-link" href="/Admin/admin/logout" style ="color:#fff">
+                  <button class ="btn btn-danger" style ="border-radius:20px;"><i class ="fa fa-power-off"></i>LogOut</button></a>
+              </li>
+              <%} %>
           </ul>
           
           <form class="form-inline my-2 my-lg-0">
