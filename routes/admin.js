@@ -106,7 +106,7 @@ router.post("/admin/shoppingstuff", upload.single('image'),(req,res,next)=>{
               });
               const result = searcher.search(text);
               console.log(result);
-              res.render('productfound',{founddata:result})
+              res.render('admin/productfound',{founddata:result})
             // res.send(result);
         
         }

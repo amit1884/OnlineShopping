@@ -3,7 +3,8 @@ var path=require('path');
 var bodyparser=require('body-parser');
 var mongoose=require('mongoose');
 var multer=require('multer');
-var bcrypt=require('bcrypt')
+var bcrypt=require('bcrypt');
+var FuzzySearch=require('fuzzy-search');
 var router=express();
 var Comment=require('../models/comment')
 var User=require('../models/user');
@@ -213,9 +214,32 @@ router.post('/user/review/:id',isLoggedIn,(req,res)=>{
     });
 })
 
+router.post('/user/search',isLoggedIn,(req,res)=>{
 
+    var text=req.body.search;
+    console.log(text);
+    Stuff.find({},(err,foundproducts)=>{
+        if(err)
+        {
+            console.log(err);
+            res.redirect('/');
+        }
+        else{
+            const searcher = new FuzzySearch(foundproducts, ['name','category'], {
+                caseSensitive: false,
+              });
+              const result = searcher.search(text);
+              console.log(result);
+              res.render('user/productfound',{founddata:result})
+            // res.send(result);
+        
+        }
+    })
+   })
 
-
+router.get('/user/notification',(req,res)=>{
+    res.render('user/notification');
+})
 
 
 

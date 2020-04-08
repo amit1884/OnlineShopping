@@ -1,0 +1,38 @@
+<%-include('../partials/header.ejs')%>
+<div class ="row text-center">
+    <div class ="col-md-12">
+          <h2>You Searched For :</h2>
+    </div>
+</div>
+</div><br>
+<div class = "container">
+<%if(founddata.length==0){%>
+  <h2>Sorry! No results found</h2>
+  <%} else{%>
+<%founddata.forEach((data)=>{%>
+  <div class ="row">
+      <div class ="col-md-4 col-sm-12">
+          <div class ="thumbnail">
+              <img src ="/uploads/<%=data.image%>" style ="width:300px;height:300px;">
+          </div>
+      </div>
+      <div class ="col-md-1 col-sm-12"></div>
+      <div class ="col-md-5 col-sm-12">
+          <div class ="jumbotron">
+          <h3 style ="color:#413;text-transform: capitalize;"><u><%=data.name%></u></h3>
+          <h5><%=data.category%></h5>
+          <h5><%=data.description%></h5>
+          <h5><b>&#8377;<%=data.price%></b></h5>
+          </div>
+          <span>
+              <a href ="/User/user/product_details/<%=data._id%>">
+              <button class ="btn btn-danger">View Details</button>
+              </a>
+          </span>
+      </div>
+  </div><hr>
+<%})%>
+<%}%>
+</div>
+
+<%-include('../partials/footer.ejs')%>
