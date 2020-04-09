@@ -241,7 +241,42 @@ router.get('/user/notification',(req,res)=>{
     res.render('user/notification');
 })
 
+router.post('/user/delcartproduct/:id',(req,res)=>{
 
+    console.log(req.body.remove);
+    var username=req.body.remove;
+    console.log(req.params.id);
+   User.findOne({username:username},(err,userfound)=>{
+       if(err)
+       console.log(err)
+       else
+       {
+           console.log('Before deletion  ')
+           console.log(userfound.cart);
+            itemarr=[];
+            for(var i=0;i<userfound.cart.length;i++)
+            {
+                if(userfound.cart[i].cartitem!=req.params.id)
+                itemarr.push(userfound.cart[i]);
+            }
+            console.log('New Array');
+            console.log(itemarr);
+
+            userfound.cart=itemarr;
+            userfound.save((err,upuser)=>{
+                if(err)
+                {
+                console.log(err)
+                res.redirect('/User/user/profile/'+username);
+                }
+                else{
+                    console.log(upuser);
+                    res.redirect('/User/user/profile/'+username);
+                }
+            });
+       }
+   })
+})
 
 
 
