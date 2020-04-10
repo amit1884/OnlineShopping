@@ -3,25 +3,35 @@ var mongoose=require('mongoose');
 var passportLocalMongoose=require('passport-local-mongoose');
 var UserSchema=new mongoose.Schema({
     username:{ 
-        type:String
+        type:String,
+        unique:true,
+        required:true
     },
     password:{
-        type:String
+        type:String,
+        required:true
     },
     first:{
-        type:String
+        type:String,
+        required:true
     },
     last:{
-        type:String
+        type:String,
+        required:true
     },
     email:{
-        type:String
+        type:String,
+        unique:true,
+        required:true
     },
     mobile:{
-        type:String
+        type:String,
+        unique:true,
+        required:true
     },
     image:{
-        type:String
+        type:String,
+        required:true
     },
     address:{
         type:String

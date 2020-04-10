@@ -5,7 +5,25 @@
     <link rel="shortcut icon" href="/images/pngfuel.com.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel ="stylesheet" href ="/css/userlogin.css">
-    <title>Online Shopping</title>
+	<title>Online Shopping</title>
+	<style>
+		.success{
+			border-radius:10px;
+			text-align:center;
+			padding:10px;
+			font-size:25px;
+			color:green;
+			margin-bottom:20px;
+		}
+		.error{
+			border-radius:10px;
+			text-align:center;
+			padding:10px;
+			color:red;
+			font-size:25px;
+			margin-bottom:20px;
+		}
+	</style>
 </head>
 <body>
 <div style ="text-align:center">
@@ -13,16 +31,26 @@
   <img src ="/images/pngfuel.com.png" class ="logo" width ="100"height ="100" style ="margin-top:5px">
   &nbsp;Shopping</h2></a>
 </div>
+<%if(message.success){%>
+	<div id ="msg" class ="success">
+	<%=message.success%>
+	</div>
+	<%}%>
+	<%if(message.error){%>
+		<div id ="msg" class ="error">
+		<%=message.error%>!!!!!
+		</div>
+		<%}%>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="/User/user/register" method ="POST"enctype="multipart/form-data">
 			<h1>Create Account</h1>
       		<input type="text" name ="username" placeholder="Username" />
-			<input type="password" name ="password" placeholder="Password" />
-			<input type="text" name ="first" placeholder="First" />
-			<input type="text" name ="last" placeholder="Last" />
-			<input type="text" name ="email" placeholder="Email" />
-			<input type="text" name ="mobile" placeholder="Mobile" />
+			<input type="password" name ="password" placeholder="Password" minlength="10"pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title ="Must contain atleast 10 character conatianing digits,upper and lowercase"/>
+			<input type="text" name ="first" placeholder="First"  pattern ="[A-Za-z]+" title ="Only Alphabets are allowed" />
+			<input type="text" name ="last" placeholder="Last"   pattern ="[A-Za-z]+" title ="Only Alphabets are allowed"/>
+			<input type="text" name ="email" placeholder="Email"pattern ="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title ="Input valid email Id" />
+			<input type="text" name ="mobile" placeholder="Mobile"pattern="[789][0-9]{9}" title ="Enter valid  mobile number " />
 			<input type="file" name ="avatar"/>
 			<button type ="submit">Sign Up</button>
 		</form>
@@ -64,5 +92,9 @@ signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
   </script>
+  <script src ="/js/jquery.js"></script>
+ <script>
+    $('#msg').fadeOut(2000);
+    </script>
 </body>
 </html>

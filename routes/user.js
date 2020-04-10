@@ -2,6 +2,8 @@ var express=require('express');
 var path=require('path');
 var bodyparser=require('body-parser');
 var mongoose=require('mongoose');
+var cookie=require('cookie-parser');
+var flash=require('connect-flash');
 var multer=require('multer');
 var bcrypt=require('bcrypt');
 var FuzzySearch=require('fuzzy-search');
@@ -11,7 +13,7 @@ var User=require('../models/user');
 var Stuff=require('../models/shop');
 mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
 
-
+router.use(cookie());
 router.set('trust proxy', 1) // trust first proxy
 
 router.use(require('express-session')({
@@ -20,8 +22,9 @@ router.use(require('express-session')({
     saveUninitialized:true,
     cookie:{secure:false}
 }));
+router.use(flash());
 const saltRounds = 10;
-var sess;
+var sess,flashmsg;
 var itemarr=[];
 
 router.use((req,res,next)=>{
@@ -55,7 +58,8 @@ router.get('/user',isLoggedIn,(req,res)=>{
     })
 })
 router.get('/user/login',(req,res)=>{
-    res.render('user/login')
+    flashmsg=req.flash();
+    res.render('user/login',{message:flashmsg});
 })
 
 router.get('/user/stuffenter',isLoggedIn,(req,res)=>{
@@ -278,12 +282,70 @@ router.post('/user/delcartproduct/:id',(req,res)=>{
    })
 })
 
+router.get('/user/deleteall/:id',(req,res)=>{
+    var user=req.params.id;
+    console.log(user);
+    User.findOne({username:user},(err,userfound)=>{
+        if(err)
+        {
+            console.log(err)
+            res.redirect('/User/user/profile/'+user);
+        }
+        else{
+            console.log(userfound);
+            userfound.updateOne( { $set: { cart: [] }}, function(err, affecteduser){
+                console.log('affected: ', affecteduser);
+            });
+        }
+    })
+})
 
 
+router.get('/user/uploadedproduct/:id',isLoggedIn,(req,res)=>{
+
+    var user=req.params.id;
+    console.log(user);
+    User.findOne({username:user},(err,userfound)=>{
+
+        if(err)
+        {
+            console.log(err);
+            res.redirect('/User/user/profile/'+user);
+        }
+        else{
+            var email=userfound.email;
+            console.log(email);
+            Stuff.find({owner:email},(err,productsfound)=>{
+
+                if(err)
+                {
+                    console.log(err)
+                    res.redirect('/User/user/profile/'+user);
+                }
+                else{
+                    res.render('user/uploadedproducts',{products:productsfound});
+                }
+            })
+        }
+    })
+})
 
 
-
-
+router.post('/user/deleteproduct/:id',isLoggedIn,(req,res)=>{
+    var id=req.params.id;
+    console.log(id);
+    Stuff.findByIdAndDelete(id,(err,products)=>{
+        if(err)
+        {
+            console.log(err)
+            res.redirect('/User/user');
+        }
+        else{
+            console.log(products);
+            res.redirect('/User/user')
+        }
+    })
+})
 
 
 
@@ -310,9 +372,15 @@ router.post('/user/register',upload.single('avatar'),(req,res,next)=>{
        console.log(newuser);
        newuser.save((err,user)=>{
            if(err)
-           console.log(err)
+           {
+            // console.log(err);
+            flashmsg=req.flash('error','Some error occurred')
+            res.redirect('/User/user/login')
+           }
            else{
                console.log(user);
+               console.log('register ho gaya');
+               flashmsg=req.flash('success','Registered Successfull')
                res.redirect('/User/user/login');
            }
        })
@@ -335,18 +403,23 @@ router.post('/user/login',(req,res)=>{
                         sess=req.session;
                         sess.username=req.body.username;
                         sess.image=founduser[0].image;
-                        sess.id=founduser[0]._id;
                         console.log('logged user :')
                         console.log(sess.username);
+                        flashmsg=req.flash('success','Login Successfull')
                       res.redirect('/User/user')
                     }
                     else{
+                       
                         console.log('wrong password');
+                        flashmsg=req.flash('error','Password wrong')
+                        res.redirect('/User/user/login')
                     }
                 })
            }
            else{
                console.log('no user found');
+               flashmsg=req.flash('error','No user found')
+               res.redirect('/User/user/login')
            }
         }
     })
@@ -367,6 +440,7 @@ function isLoggedIn(req,res,next){
     sess=req.session;
     if(sess.username)
     return next();
+    flashmsg=req.flash('error','Login Required')
     res.redirect('/User/user/login');
 }
 

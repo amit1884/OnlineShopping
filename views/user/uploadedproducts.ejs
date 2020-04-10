@@ -1,0 +1,36 @@
+<%-include('../partials/userheader.ejs')%>
+
+<div class ="container">
+    <div class ="row text-center">
+        <div class ="col-md-12">
+            <h1>Your Products</h1>
+        </div>
+    </div>
+</div>
+<div class ="container">
+  <%if(products.length==0){%>
+        <div class ="text-center"><h1>No Products uploaded .Upload your first product</h1></div>
+    <%} else{%>
+
+        <%products.forEach((data)=>{%>
+
+            <div class ="row">
+                <div class ="col-md-4 col-sm-12">
+                    <div class ="thumbnail"><img src ="/uploads/<%=data.image%>" style ="width:300px;height:300px;"></div>
+                </div>
+                <div class ="col-md-8 col-sm-12">
+                    <h3><u><%=data.name%></u></h3>
+                    <h5><%=data.category%></h5>
+                    <h5><%=data.description%></h5>
+                    <h4><b>Price : &#8377;</b><%=data.price%></h4><br>
+                    <form action ="/User/user/deleteproduct/<%=data._id%>" method ="POST">
+                        <button class ="btn btn-outline-danger"><i class ="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
+                    </form>
+                </div>
+            </div><hr>
+       <% })%>
+
+
+        <%}%>
+</div>
+<%-include('../partials/footer.ejs')%>

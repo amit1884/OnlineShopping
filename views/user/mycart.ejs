@@ -48,7 +48,7 @@
                         </div>
                         <div class ="col-md-6">
                             <form action ="/User/user/delcartproduct/<%=data._id%>" method ="POST">
-                                <button class ="btn btn-outline-danger"name ="remove" value="<%=currentUser%>">Remove from Cart</button>
+                                <button class ="btn btn-outline-danger"name ="remove" value="<%=currentUser%>"><i class ="fa fa-trash"></i>&nbsp;&nbsp;Remove from Cart</button>
                             </form>
                         </div>
                     </div>
@@ -58,6 +58,9 @@
         <% }) }%>
             <div class ="jumbotron">
                 <h3><b>Total Amount :</b> &#8377;<%=totalprice%></h3>
+                <a href ="/User/user/deleteall/<%=currentUser%>">
+                    <button class ="btn btn-danger"><i class ="fa fa-trash"></i>&nbsp;&nbsp;Empty Cart</button>
+                </a>
             </div>
 </div>
 <%-include('../partials/footer.ejs')%>
