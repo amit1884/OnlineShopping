@@ -42,9 +42,15 @@
                     <h4><b>Price : &#8377;</b><%=data.price%></h4><br>
                     <div class ="row ">
                         <div class ="col-md-6 ">
-                            <form action ="/User/user/buyproduct/<%=data._id%>" method ="POST">
-                                <button class ="btn btn-outline-primary">Buy Now</button>
-                            </form>
+                            <%if(data.flag==1){%>
+                                <form action ="/User/user/buyproduct/<%=currentUser%>" method ="POST" >
+                                  <button class ="btn btn-danger"value ="<%=data._id%>" name ="product" disabled>&nbsp;&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                  </form>
+                              <%}else{%>
+                                <form action ="/User/user/buyproduct/<%=currentUser%>" method ="POST" >
+                                  <button class ="btn btn-danger"value ="<%=data._id%>" name ="product">&nbsp;&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                  </form>
+                                <%}%>
                         </div>
                         <div class ="col-md-6">
                             <form action ="/User/user/delcartproduct/<%=data._id%>" method ="POST">

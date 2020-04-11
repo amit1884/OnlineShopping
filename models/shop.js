@@ -26,6 +26,10 @@ var ShopSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    flag:{
+        type:String,
+        default:0
+    },
     comments:[
         {
             type:mongoose.Schema.Types.ObjectId,

@@ -41,7 +41,18 @@ var UserSchema=new mongoose.Schema({
             cartitem:String
             
         }
-    ]
+    ],
+    orders:[{
+        name:String,
+        category:String,
+        price:String,
+        description:String,
+        image:String,
+        owner:String
+    }],
+    notification:[{
+        message:String
+    }]
 });
 UserSchema.plugin(passportLocalMongoose);
 

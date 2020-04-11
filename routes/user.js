@@ -111,6 +111,9 @@ router.post("/user/shoppingstuff", upload.single('image'),(req,res,next)=>{
        });
    })
 
+
+
+
    router.post('/user/add_address/:id',isLoggedIn,(req,res)=>{
 
    var id =req.params.id;
@@ -131,6 +134,7 @@ router.post("/user/shoppingstuff", upload.single('image'),(req,res,next)=>{
     }
    })
    })
+
 
 
 
@@ -161,6 +165,9 @@ router.post('/user/addtocart/:id',isLoggedIn,(req,res)=>{
     });
 })
 
+
+
+
 router.get('/user/cartdetails/:id',isLoggedIn,(req,res)=>{
     var id =req.params.id;
     User.findById(id,(err,userfound)=>{
@@ -188,6 +195,9 @@ router.get('/user/cartdetails/:id',isLoggedIn,(req,res)=>{
        }    
     })
 })
+
+
+
 
 
 router.post('/user/review/:id',isLoggedIn,(req,res)=>{
@@ -218,6 +228,10 @@ router.post('/user/review/:id',isLoggedIn,(req,res)=>{
     });
 })
 
+
+
+
+
 router.post('/user/search',isLoggedIn,(req,res)=>{
 
     var text=req.body.search;
@@ -240,6 +254,9 @@ router.post('/user/search',isLoggedIn,(req,res)=>{
         }
     })
    })
+
+
+
 
 router.get('/user/notification',(req,res)=>{
     res.render('user/notification');
@@ -281,6 +298,10 @@ router.post('/user/delcartproduct/:id',(req,res)=>{
        }
    })
 })
+
+
+
+
 
 router.get('/user/deleteall/:id',(req,res)=>{
     var user=req.params.id;
@@ -343,6 +364,113 @@ router.post('/user/deleteproduct/:id',isLoggedIn,(req,res)=>{
         else{
             console.log(products);
             res.redirect('/User/user')
+        }
+    })
+})
+
+
+
+
+
+
+
+router.post('/user/buyproduct/:id',isLoggedIn,(req,res)=>{
+
+    console.log(req.params.id);
+    console.log(req.body.product);
+    Stuff.findById(req.body.product,(err,product)=>{
+
+        if(err)
+        {
+            console.log(err)
+        }
+        else{
+            product.flag=1;
+            product.save();
+            User.findOne({username:req.params.id},(err,userfound)=>{
+                if(err)
+                {
+                    console.log(err)
+                }
+                else{
+                    userfound.updateOne({$push:{orders:[{name:product.name,category:product.category,price:product.price,decription:product.description,image:product.image,owner:product.owner}]}},(err,users)=>{
+
+                        if(err)
+                        {
+                            console.log(err)
+                        }else{
+                            console.log(users);
+                            User.findOne({username:req.params.id},(err,fuser)=>{
+                                if(err)
+                                {
+                                    console.log(err)
+                                }
+                                else{
+                                    User.findOne({email:product.owner},(err,owner)=>{
+                                        if(err)
+                                        {
+                                            console.log(err)
+                                        }
+                                        else{
+                                            console.log()
+                                            owner.updateOne({$push:{notification:[{message:fuser.first+' '+fuser.last+' has bought your product '+ product.name}]}},(err,updated)=>{
+                                                if(err)
+                                                {
+                                                    console.log(err)
+                                                }
+                                                else{
+                                                    console.log(updated);
+                                                    res.render('user/buydetails',{buyer:fuser,product:product,seller:owner})
+                                                }
+                                            });
+                                        
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                        
+                }
+            })
+            
+        }
+    })
+})
+
+
+
+router.get('/user/notification/:id',(req,res)=>{
+
+    var id=req.params.id;
+    console.log(id);
+    User.findOne({username:id},(err,userfound)=>{
+        if(err)
+        {
+            console.log(err)
+        }
+        else{
+            console.log(userfound);
+            res.render('user/notification',{user:userfound});
+        }
+    })
+})
+
+
+
+router.get('/user/myorders/:id',(req,res)=>{
+
+    var id=req.params.id;
+    console.log(id);
+    User.findOne({username:id},(err,userfound)=>{
+        if(err)
+        {
+            console.log(err)
+            res.redirect('/User/user/profile/'+id);
+        }
+        else{
+            console.log(userfound);
+            res.render('user/myorders',{user:userfound});
         }
     })
 })

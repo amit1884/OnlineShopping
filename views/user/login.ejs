@@ -46,11 +46,11 @@
 		<form action="/User/user/register" method ="POST"enctype="multipart/form-data">
 			<h1>Create Account</h1>
       		<input type="text" name ="username" placeholder="Username" />
-			<input type="password" name ="password" placeholder="Password" minlength="10"pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title ="Must contain atleast 10 character conatianing digits,upper and lowercase"/>
-			<input type="text" name ="first" placeholder="First"  pattern ="[A-Za-z]+" title ="Only Alphabets are allowed" />
-			<input type="text" name ="last" placeholder="Last"   pattern ="[A-Za-z]+" title ="Only Alphabets are allowed"/>
-			<input type="text" name ="email" placeholder="Email"pattern ="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title ="Input valid email Id" />
-			<input type="text" name ="mobile" placeholder="Mobile"pattern="[789][0-9]{9}" title ="Enter valid  mobile number " />
+			<input type="password" name ="password" placeholder="Password" >
+			<input type="text" name ="first" placeholder="First"  />
+			<input type="text" name ="last" placeholder="Last"  />
+			<input type="text" name ="email" placeholder="Email">
+			<input type="text" name ="mobile" placeholder="Mobile"/>
 			<input type="file" name ="avatar"/>
 			<button type ="submit">Sign Up</button>
 		</form>

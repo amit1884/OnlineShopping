@@ -242,12 +242,29 @@ td{
                       </td>
                     </tr>
                     <tr>
+                      <th>
+                        <%if(product.flag==0){%>
+                          <p style ="color:green"><b>In Stock</b></p>
+                          <%}else{%>
+                            <p style ="color:red"><b>Out Of Stock</b></p>
+                            <%}%>
+                      </th>
+                    </tr>
+                    <tr>
                   <td><form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
                     <button class ="btn btn-warning" value ="<%=product._id%>" name ="add">&nbsp;&nbsp;&nbsp;Add to Cart&nbsp;&nbsp;&nbsp;</button>
                   </form></td>
-                  <td><form action ="/User/user/buyproduct/<%=product._id%>" method ="POST" >
-                    <button class ="btn btn-danger"value ="<%=product._id%>" name ="product">&nbsp;&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                  </form></td>
+                  <td>
+                    <%if(product.flag==1){%>
+                      <form action ="/User/user/buyproduct/<%=currentUser%>" method ="POST" >
+                        <button class ="btn btn-danger"value ="<%=product._id%>" name ="product" disabled>&nbsp;&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        </form>
+                    <%}else{%>
+                      <form action ="/User/user/buyproduct/<%=currentUser%>" method ="POST" >
+                        <button class ="btn btn-danger"value ="<%=product._id%>" name ="product">&nbsp;&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        </form>
+                      <%}%>
+                  </td>
                   </tr>
                 </table>
               </div>

@@ -21,7 +21,7 @@
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-        </ol>
+        </ol> 
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img class="d-block w-100" src="/images/banner2.jpg" alt="First slide" style ="height:80vh;">
@@ -71,7 +71,12 @@
                           </div>
                           <div class ="details">
                             <h3><b><%=data.name%></b></h3>
-                            <p><b>Price : </b>&#8377;<%=data.price%></h3>
+                            <p><b>Price : </b>&#8377;<%=data.price%></p>
+                            <%if(data.flag==0){%>
+                              <p style ="color:green"><b>In Stock</b></p>
+                              <%}else{%>
+                                <p style ="color:red"><b>Out Of Stock</b></p>
+                                <%}%>
                            <div>
                               <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
                                 <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
@@ -98,6 +103,11 @@
                          <div class ="details">
                            <h3><b><%=data.name%></b></h3>
                            <p><b>Price : </b> &#8377;<%=data.price%></h3>
+                           <%if(data.flag==0){%>
+                            <p style ="color:green"><b>In Stock</b></p>
+                            <%}else{%>
+                              <p style ="color:red"><b>Out Of Stock</b></p>
+                              <%}%>
                           <div>
                             <form action ="/User/user/addtocart/<%=currentUser%>" method ="post">
                               <button class ="btn btn-outline-warning" value ="<%=data._id%>" name ="add">Add to Cart</button>
