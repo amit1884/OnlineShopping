@@ -440,7 +440,7 @@ router.post('/user/buyproduct/:id',isLoggedIn,(req,res)=>{
 
 
 
-router.get('/user/notification/:id',(req,res)=>{
+router.get('/user/notification/:id',isLoggedIn,(req,res)=>{
 
     var id=req.params.id;
     console.log(id);
@@ -458,7 +458,8 @@ router.get('/user/notification/:id',(req,res)=>{
 
 
 
-router.get('/user/myorders/:id',(req,res)=>{
+router.get('/user/myorders/:id',isLoggedIn,
+(req,res)=>{
 
     var id=req.params.id;
     console.log(id);
