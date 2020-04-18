@@ -7,7 +7,8 @@ var FuzzySearch=require('fuzzy-search');
 var Stuff=require('./models/shop');
 var mongoose=require('mongoose')
 var app=express();
-mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://amit:<raj>@cluster0-hny5q.mongodb.net/test',{useNewUrlParser: true,useUnifiedTopology: true });
 
 
 app.set("view engine","ejs");
