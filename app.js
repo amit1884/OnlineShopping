@@ -57,10 +57,13 @@ app.post('/search',(req,res)=>{
 
 
 
-app.listen(3000,(err)=>{
-    if(err)
-    console.log(err)
-    else{
-        console.log('server running');
-    }
+// app.listen(3000,(err)=>{
+//     if(err)
+//     console.log(err)
+//     else{
+//         console.log('server running');
+//     }
+// })
+app.listen(process.env.PORT,process.env.IP,()=>{
+    console.log('server running');
 })
