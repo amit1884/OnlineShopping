@@ -11,7 +11,8 @@ var router=express();
 var Comment=require('../models/comment')
 var User=require('../models/user');
 var Stuff=require('../models/shop');
-mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
+// mongoose.connect('mongodb+srv://amit:raj@cluster0-hny5q.mongodb.net/test',{useNewUrlParser: true,useUnifiedTopology: true });
 
 router.use(cookie());
 router.set('trust proxy', 1) // trust first proxy

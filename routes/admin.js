@@ -10,7 +10,7 @@ var router=express();
 // var User=require('../models/user');
 var Stuff=require('../models/shop');
 var Admin=require('../models/admin');
-mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
 
 
 

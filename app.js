@@ -8,7 +8,11 @@ var Stuff=require('./models/shop');
 var mongoose=require('mongoose')
 var app=express();
 // mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://amit:<raj>@cluster0-hny5q.mongodb.net/test',{useNewUrlParser: true,useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://amit:raj@cluster0-hny5q.mongodb.net/test',{useNewUrlParser: true,useUnifiedTopology: true }).then(()=>{
+    console.log('databse connected')
+}).catch(()=>{
+    console.log(' database not connected')
+});
 
 
 app.set("view engine","ejs");
@@ -58,13 +62,13 @@ app.post('/search',(req,res)=>{
 
 
 
-// app.listen(3000,(err)=>{
-//     if(err)
-//     console.log(err)
-//     else{
-//         console.log('server running');
-//     }
-// })
-app.listen(process.env.PORT,process.env.IP,()=>{
-    console.log('server running');
+app.listen(3000,(err)=>{
+    if(err)
+    console.log(err)
+    else{
+        console.log('server running');
+    }
 })
+// app.listen(process.env.PORT,process.env.IP,()=>{
+//     console.log('server running');
+// })
