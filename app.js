@@ -8,7 +8,7 @@ var Stuff=require('./models/shop');
 var mongoose=require('mongoose')
 var app=express();
 // mongoose.connect('mongodb://localhost/online_shopping',{useNewUrlParser: true,useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://amit:raj@cluster0-hny5q.mongodb.net/test',{useNewUrlParser: true,useUnifiedTopology: true }).then(()=>{
+mongoose.connect('mongodb+srv://amit:raj@cluster0-hny5q.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser: true,useUnifiedTopology: true }).then(()=>{
     console.log('databse connected')
 }).catch(()=>{
     console.log(' database not connected')
