@@ -28,7 +28,9 @@
             </div>
         </div><br>
         <%items.forEach((data)=>{%>
-            <%totalprice=totalprice+parseInt(data.price,10); %>
+        <%if(data.isDeleted==0){totalprice=totalprice+parseInt(data.price,10); }%>
+           <%if(data.isDeleted==0){%>
+
             <div class ="row">
                 <div class ="col-md-4 col-sm-12">
                     <div class ="thumbnail">
@@ -61,7 +63,8 @@
                 </div>
             </div>
             <hr>
-        <% }) }%>
+           
+        <% }}) }%>
             <div class ="jumbotron">
                 <h3><b>Total Amount :</b> &#8377;<%=totalprice%></h3>
                 <a href ="/User/user/deleteall/<%=currentUser%>">

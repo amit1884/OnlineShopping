@@ -30,6 +30,10 @@ var ShopSchema=new mongoose.Schema({
         type:String,
         default:0
     },
+    isDeleted:{
+        type:String,
+        default:0
+    },
     comments:[
         {
             type:mongoose.Schema.Types.ObjectId,

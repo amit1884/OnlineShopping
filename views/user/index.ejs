@@ -72,7 +72,7 @@
                           <div class ="details">
                             <h3><b><%=data.name%></b></h3>
                             <p><b>Price : </b>&#8377;<%=data.price%></p>
-                            <%if(data.flag==0){%>
+                            <%if(data.flag==0 && data.isDeleted==0){%>
                               <p style ="color:green"><b>In Stock</b></p>
                               <%}else{%>
                                 <p style ="color:red"><b>Out Of Stock</b></p>

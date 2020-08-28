@@ -356,7 +356,19 @@ router.get('/user/uploadedproduct/:id',isLoggedIn,(req,res)=>{
 router.post('/user/deleteproduct/:id',isLoggedIn,(req,res)=>{
     var id=req.params.id;
     console.log(id);
-    Stuff.findByIdAndDelete(id,(err,products)=>{
+    // Stuff.findByIdAndDelete(id,(err,products)=>{
+    //     if(err)
+    //     {
+    //         console.log(err)
+    //         res.redirect('/User/user');
+    //     }
+    //     else{
+    //         console.log(products);
+    //         res.redirect('/User/user')
+    //     }
+    // })
+
+    Stuff.findByIdAndUpdate(id,{isDeleted:"1"},(err,products)=>{
         if(err)
         {
             console.log(err)
