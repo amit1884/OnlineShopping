@@ -137,63 +137,42 @@ router.post("/user/shoppingstuff", upload.single('image'),(req,res,next)=>{
    })
 
 
-
-
+//Adding to cart route
 router.post('/user/addtocart/:id',isLoggedIn,(req,res)=>{
-    var userid =req.params.id;
-    var prid=req.body.add;
-    console.log(prid);
-    
-    User.findOne({username:userid},(err,userfound)=>{
+
+    User.findOneAndUpdate({username:req.params.id},{
+        $push:{cart:req.body.add}
+    },{
+        new:true
+    },( err,result)=>{
         if(err)
         {
             console.log(err);
             res.redirect('/User/user')
         }
         else{
-           userfound.updateOne({$push:{cart:[{cartitem:prid}]}},(err,cartadd)=>{
-               if(err)
-               {
-                console.log(err);
-                res.redirect('/User/user')
-               }
-               else{
-                   console.log(cartadd);
-                   res.redirect('/User/user')
-               }
-           })
+             console.log(result);
+             res.redirect('/User/user')
         }
-    });
+    })
 })
 
 
 
 
+
+//cartdetails rendering route of a user
+
 router.get('/user/cartdetails/:id',isLoggedIn,(req,res)=>{
-    var id =req.params.id;
-    User.findById(id,(err,userfound)=>{
-       if(err)
-       console.log(err)
-       else{
-            for(var i=0;i<userfound.cart.length;i++)
-            {
-                console.log("id  :"+i+" "+userfound.cart[i].cartitem);
-                Stuff.findById(userfound.cart[i].cartitem,(err,itemfound)=>{
-                    if(err)
-                    {
-                        console.log(err)
-                    }
-                    else{
-                        itemarr.push(itemfound);
-                    }
-                    
-                })
-            }
-            console.log(itemarr);
-            res.render('user/mycart',{items:itemarr});
-        //    res.send(itemarr);
-            itemarr=[];
-       }    
+
+    User.findById(req.params.id).populate("cart").exec ((err,userfound)=>{
+        if(err)
+        {
+            console.log(err)
+        }
+        else{
+            res.render('user/mycart',{items:userfound.cart});
+        }
     })
 })
 
@@ -263,41 +242,26 @@ router.get('/user/notification',(req,res)=>{
     res.render('user/notification');
 })
 
-router.post('/user/delcartproduct/:id',(req,res)=>{
 
-    console.log(req.body.remove);
-    var username=req.body.remove;
-    console.log(req.params.id);
-   User.findOne({username:username},(err,userfound)=>{
-       if(err)
-       console.log(err)
-       else
-       {
-           console.log('Before deletion  ')
-           console.log(userfound.cart);
-            itemarr=[];
-            for(var i=0;i<userfound.cart.length;i++)
-            {
-                if(userfound.cart[i].cartitem!=req.params.id)
-                itemarr.push(userfound.cart[i]);
-            }
-            console.log('New Array');
-            console.log(itemarr);
 
-            userfound.cart=itemarr;
-            userfound.save((err,upuser)=>{
-                if(err)
-                {
-                console.log(err)
+router.post('/user/delcartproduct/:id',isLoggedIn,(req,res)=>{
+
+    const username=req.body.remove;
+    console.log('username delete cart item ',username)
+    User.findOneAndUpdate({username:req.body.remove},
+        {$pull:{cart:req.params.id}},{
+            new:true
+        },(err,result)=>{
+            if(err){
+                console.log('error aaya',err)
                 res.redirect('/User/user/profile/'+username);
-                }
-                else{
-                    console.log(upuser);
-                    res.redirect('/User/user/profile/'+username);
-                }
-            });
-       }
-   })
+            }
+            else{
+                console.log('result aaya  ',result);
+                res.redirect('/User/user/profile/'+username);
+            }
+        })
+
 })
 
 
@@ -317,6 +281,7 @@ router.get('/user/deleteall/:id',(req,res)=>{
             console.log(userfound);
             userfound.updateOne( { $set: { cart: [] }}, function(err, affecteduser){
                 console.log('affected: ', affecteduser);
+                res.redirect('/User/user/profile/'+user);
             });
         }
     })

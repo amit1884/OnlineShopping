@@ -1,6 +1,6 @@
-var mongoose=require('mongoose');
-// var Cart=require('./cart')
+const mongoose = require('mongoose');
 var passportLocalMongoose=require('passport-local-mongoose');
+var Shop=require('./shop')
 var UserSchema=new mongoose.Schema({
     username:{ 
         type:String,
@@ -38,7 +38,9 @@ var UserSchema=new mongoose.Schema({
     },
     cart:[
         {
-            cartitem:String
+            // cartitem:String
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Shop"
             
         }
     ],
